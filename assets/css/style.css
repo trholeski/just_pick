@@ -1,4 +1,4 @@
-h1, h2 {
+h1 {
     color: #fff;
  }
  #searchForm {
@@ -19,10 +19,17 @@ h1, h2 {
    background-position: center;
  }
 
- #searchBar {
-    /* margin: 0;
+ .big-banner2 {
+    background-image: url(../images/pizza2.jpg);
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+ #searchBarResults {
+    margin: 0;
     padding: 5px;
     position: relative;
-    float: right; */
+    float: right;
 
  }
