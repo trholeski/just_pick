@@ -50,7 +50,7 @@ h1, h2 {
   .modal__container {
     background-color: #fff;
     padding: 30px;
-    max-width: 500px;
+    max-width: 1000px;
     max-height: 100vh;
     border-radius: 4px;
     overflow-y: auto;
@@ -66,6 +66,8 @@ h1, h2 {
   .modal__title {
     margin-top: 0;
     margin-bottom: 0;
+    margin-left: 1em;
+    margin-right: 1em;
     font-weight: 600;
     font-size: 1.25rem;
     line-height: 1.25;
