@@ -18,9 +18,14 @@
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-
+    <script src= "http://maps.googleapis.com/maps/api/js?key=AIzaSyDVxbtHunY92oZOSYaPmLAY89E_n1uvoy4"></script>
 </head>
-
+<style>
+#mapResults {
+    width: auto;
+    height: 400px;
+}
+</style>
 <body>
     <form class="form-inline my-2 my-lg-0 formInputs d-flex justify-content-center" id="searchBarResults">
         <input class="form-control mr-sm-2" type="search" placeholder="choose a new cuisine" aria-label="Search">
@@ -49,8 +54,8 @@
             </div>
 
             <div class="col-md-6 text-center">
-                <div id="mapResults">
                     <h2>Map Results</h2>
+                <div id="mapResults">
                     
                 </div>
             </div>
