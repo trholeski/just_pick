@@ -38,8 +38,24 @@ var cuisineType = '';
 var cuisineID = 0;
 var restaurantList = [];
 
-function restaurantQuery() {
-    $('#zomResults').html('');
+function startPage (){
+    $('#resultsPage').hide();
+    $('#homepage').show();
+    console.log('working');
+}
+
+window.onload = startPage;
+
+
+function newPage(event){
+    event.preventDefault();
+$('#homepage').hide();
+    restaurantQuery();
+};
+
+function restaurantQuery(){
+    $('#resultsPage').show();
+    $('#zomResults').html(''); 
     //create array of available cuisines by locations
     var queryURL = 'https://developers.zomato.com/api/v2.1/cuisines?city_id=' + cityID + '&lat=' + lat + '&lon=' + lon + '&count=5&apikey=77290d1b4dc1f21c65b6176dd07d56ed';
 
@@ -106,9 +122,11 @@ function restaurantQuery() {
         });
 };
 
-$(document).on('click', '.chooseBtn', restaurantQuery);
+$('.chooseBtnResults').on('click', restaurantQuery);
+$('#chooseBtnID').on('click', newPage);
 
+//need to restrict certain cuisine
 //add session storage for results?
 //do we need to pull/stor lat/long results for google api?
 //add alt for images
-
+//remove 'undefined' type

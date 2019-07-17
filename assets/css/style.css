@@ -34,3 +34,11 @@ h1 {
 
  }
 
+#linkBtn {
+    border-radius: 25px;
+}
+
+#mapResults {
+    width: auto;
+    height: 400px;
+}
