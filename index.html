@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 </head>
 <body>
-    
+    <div id="homepage">
     <div class="jumbotron big-banner" style="height: 500px; padding-top: 150px;">
 
         <h1 class="text-center display-4">What do you want to eat?</h1>
@@ -40,12 +40,50 @@
                         <input class="form-control" type="text" placeholder="What are you eating?" id="cuisineType">
                     </div> -->
                 </div>
-                <button type="submit" class="btn btn-dark btn-lg chooseBtn">Choose for me!</button>
+                <button type="submit" class="btn btn-dark btn-lg chooseBtn" id="chooseBtnID"> Choose for me!</button>
                 <!-- <a href='results.html' type="submit" class="btn btn-dark btn-lg chooseBtn">Choose for me!</a> -->
             </form>
             
         </div>
     </div>
+</div>
+
+<div id="resultsPage">
+    <form class="form-inline my-2 my-lg-0 formInputs d-flex justify-content-center" id="searchBarResults">
+        <input class="form-control mr-sm-2" type="search" placeholder="choose a new cuisine" aria-label="Search">
+        <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <div class="jumbotron big-banner2" style="height: 200px; padding-top: 75px;">
+
+        <div class="container d-flex justify-content-center">
+
+            <div class="row">
+                <div>
+                    <button type="submit" class="btn btn-dark btn-lg chooseBtnResults">Choose for me again!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <div id="zomResults">
+                    <h2>Restaurant Results</h2>
+                </div>
+            </div>
+
+            <div class="col-md-6 text-center">
+                <div id="mapResults">
+                    <h2>Map Results</h2>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <footer class="page-footer font-small">
         <div class="footer-copyright text-center py-3">Restaurant information sourced from
         <a href="https://developers.zomato.com/api#headline1"> Zomato API</a>
