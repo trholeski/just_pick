@@ -1,5 +1,7 @@
 var startLat = 47.6062;
 var startLng = -122.3321;
+var resultsArray = [];
+
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
         var pos = {
@@ -10,9 +12,8 @@ if (navigator.geolocation) {
         startLat = pos.lat
         startLng = pos.lng
         console.log(startLat);
-        initMap();
+
     }, function () {
-        initMap();
     });
 } else {
 
@@ -21,12 +22,20 @@ if (navigator.geolocation) {
 function initMap() {
     console.log(startLat);
     var geoLocation = { lat: startLat, lng: startLng };
-    var marker1 = { lat: 47.6778194444, lng: -122.3548805556 };
+    var marker1 = { lat: parseFloat(resultsArray[0]), lng: parseFloat(resultsArray[1]) };
+    var marker2 = { lat: parseFloat(resultsArray[2]), lng: parseFloat(resultsArray[3]) };
+    var marker3 = { lat: parseFloat(resultsArray[4]), lng: parseFloat(resultsArray[5]) };
+    var marker4 = { lat: parseFloat(resultsArray[6]), lng: parseFloat(resultsArray[7]) };
+    var marker5 = { lat: parseFloat(resultsArray[8]), lng: parseFloat(resultsArray[9]) };
     // The map, centered at Uluru
     var map = new google.maps.Map(
         document.getElementById('mapResults'), { zoom: 11, center: geoLocation });
     // The marker, positioned at Uluru
-    var marker = new google.maps.Marker({ position: marker1, map: map });
+    var mapMarker1 = new google.maps.Marker({ position: marker1, map: map });
+    var mapMarker2 = new google.maps.Marker({ position: marker2, map: map });
+    var mapMarker3 = new google.maps.Marker({ position: marker3, map: map });
+    var mapMarker4 = new google.maps.Marker({ position: marker4, map: map });
+    var mapMarker5 = new google.maps.Marker({ position: marker5, map: map });
 }
 
 var cuisines = [];
@@ -38,7 +47,7 @@ var cuisineType = '';
 var cuisineID = 0;
 var restaurantList = [];
 
-function startPage (){
+function startPage() {
     $('#resultsPage').hide();
     $('#homepage').show();
     console.log('working');
@@ -47,18 +56,18 @@ function startPage (){
 window.onload = startPage;
 
 
-function newPage(event){
+function newPage(event) {
     event.preventDefault();
-$('#homepage').hide();
+    $('#homepage').hide();
     restaurantQuery();
 };
 
-function restaurantQuery(){
+function restaurantQuery() {
     $('#resultsPage').show();
-    $('#zomResults').html(''); 
+    $('#zomResults').html('');
     //create array of available cuisines by locations
-    var queryURL = 'https://developers.zomato.com/api/v2.1/cuisines?city_id=' + cityID + '&lat=' + lat + '&lon=' + lon + '&count=5&apikey=77290d1b4dc1f21c65b6176dd07d56ed';
-
+    var queryURL = 'https://developers.zomato.com/api/v2.1/cuisines?city_id=' + cityID + '&lat=' + startLat + '&lon=' + startLng + '&count=5&apikey=77290d1b4dc1f21c65b6176dd07d56ed';
+    // code to push all cuisine types into the cuisines array.
     $.ajax({
         url: queryURL,
         method: 'GET'
@@ -81,14 +90,13 @@ function restaurantQuery(){
             $('#zomResults').append('<br>');
 
             //pull restaurant info based on cuisineID
-            var queryURL = 'https://developers.zomato.com/api/v2.1/search?entity_type=zone&lat=47.6062&lon=-122.3321&cuisines=' + cuisineID + '&count=5&apikey=77290d1b4dc1f21c65b6176dd07d56ed';
+            var queryURL = 'https://developers.zomato.com/api/v2.1/search?entity_type=zone&lat=' + startLat + '&lon=' + startLng + '&cuisines=' + cuisineID + '&count=5&radius=8045&apikey=77290d1b4dc1f21c65b6176dd07d56ed';
 
             $.ajax({
                 url: queryURL,
                 method: 'GET'
             })
                 .then(function (response) {
-
                     console.log(response);
                     var results2 = response.restaurants;
                     console.log(results2[0].restaurant.name);
@@ -114,17 +122,23 @@ function restaurantQuery(){
                         cardDiv5.append('<button type=\'button\' class=\'btn btn-light modalBtn\'>' + 'More info' + '</button>');
                         cardDiv4.append(cardDiv5);
                         $('#zomResults').append(cardDiv1);
-
+                        resultsArray.push(results2[i].restaurant.location.latitude);
+                        resultsArray.push(results2[i].restaurant.location.longitude);
+                        console.log(resultsArray);
+                        initMap();
                     }
-
                 });
-
         });
 };
 
+function searchQuery(event){
+    event.preventDefault();
+    var userSearch = $("#searchBar").val();
+    console.log(userSearch);
+}
 $('.chooseBtnResults').on('click', restaurantQuery);
 $('#chooseBtnID').on('click', newPage);
-
+$("#userSearch").on("click", searchQuery);
 //need to restrict certain cuisine
 //add session storage for results?
 //do we need to pull/stor lat/long results for google api?

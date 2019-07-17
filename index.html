@@ -1,96 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- <link rel="stylesheet" href="assets/css/reset.css"> -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Project 1</title>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    <script src= "http://maps.googleapis.com/maps/api/js?key=AIzaSyDVxbtHunY92oZOSYaPmLAY89E_n1uvoy4"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDVxbtHunY92oZOSYaPmLAY89E_n1uvoy4"></script>
 </head>
+
 <body>
     <div id="homepage">
-    <div class="jumbotron big-banner" style="height: 500px; padding-top: 150px;">
+        <div class="jumbotron big-banner" style="height: 500px; padding-top: 150px;">
 
-        <h1 class="text-center display-4">What do you want to eat?</h1>
-        <br>
-        <form class="form-inline my-2 my-lg-0 formInputs d-flex justify-content-center" id="searchBar">
-            <input class="form-control mr-sm-2" type="search" placeholder="choose a cuisine" aria-label="Search">
-            <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        <br>
+            <h1 class="text-center display-4">What do you want to eat?</h1>
+            <br>
+            <form class="form-inline my-2 my-lg-0 formInputs d-flex justify-content-center">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchBar">
+                <button class="btn btn-dark my-2 my-sm-0" type="submit" id="userSearch">Search</button>
+            </form>
+            <br>
 
-        <h1 class="text-center display-4">Can't decide?</h1>
+            <h1 class="text-center display-4">Can't decide?</h1>
 
-        <div class="text-center d-flex justify-content-center">
-            <form id="searchForm"> 
-                <div class="formInputs d-flex justify-content-center">
-                    <!-- <div class="form-group" id="search">
+            <div class="text-center d-flex justify-content-center">
+                <form id="searchForm">
+                    <div class="formInputs d-flex justify-content-center">
+                        <!-- <div class="form-group" id="search">
                         <label for="citySesarch">Enter City</label>
                         <input class="form-control" type="text" placeholder="Where are you eating?" id="citySesarch">
                     </div> -->
 
-                    <!-- <div class="form-group" id="form2">
+                        <!-- <div class="form-group" id="form2">
                         <label for="cuisineType">Enter Cuisine type</label>
                         <input class="form-control" type="text" placeholder="What are you eating?" id="cuisineType">
                     </div> -->
-                </div>
-                <button type="submit" class="btn btn-dark btn-lg chooseBtn" id="chooseBtnID"> Choose for me!</button>
-                <!-- <a href='results.html' type="submit" class="btn btn-dark btn-lg chooseBtn">Choose for me!</a> -->
-            </form>
-            
+                    </div>
+                    <button type="submit" class="btn btn-dark btn-lg chooseBtn" id="chooseBtnID"> Choose for
+                        me!</button>
+                    <!-- <a href='results.html' type="submit" class="btn btn-dark btn-lg chooseBtn">Choose for me!</a> -->
+                </form>
+
+            </div>
         </div>
     </div>
-</div>
 
-<div id="resultsPage">
-    <form class="form-inline my-2 my-lg-0 formInputs d-flex justify-content-center" id="searchBarResults">
-        <input class="form-control mr-sm-2" type="search" placeholder="choose a new cuisine" aria-label="Search">
-        <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <div id="resultsPage">
+        <form class="form-inline my-2 my-lg-0 formInputs d-flex justify-content-center" id="searchBarResults">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchBar">
+            <button class="btn btn-dark my-2 my-sm-0" type="submit" id="userSearch">Search</button>
+        </form>
 
-    <div class="jumbotron big-banner2" style="height: 200px; padding-top: 75px;">
+        <div class="jumbotron big-banner2" style="height: 200px; padding-top: 75px;">
 
-        <div class="container d-flex justify-content-center">
+            <div class="container d-flex justify-content-center">
+
+                <div class="row">
+                    <div>
+                        <button type="submit" class="btn btn-dark btn-lg chooseBtnResults">Choose for me again!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
 
             <div class="row">
-                <div>
-                    <button type="submit" class="btn btn-dark btn-lg chooseBtnResults">Choose for me again!</button>
+                <div class="col-md-6 text-center">
+                    <div id="zomResults">
+                        <h2>Restaurant Results</h2>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="container">
-
-        <div class="row">
-            <div class="col-md-6 text-center">
-                <div id="zomResults">
-                    <h2>Restaurant Results</h2>
-                </div>
-            </div>
-
-            <div class="col-md-6 text-center">
-                <div id="mapResults">
+                <div class="col-md-6 text-center">
                     <h2>Map Results</h2>
-                    
+                    <br>
+                    <div id="mapResults">
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <footer class="page-footer font-small">
         <div class="footer-copyright text-center py-3">Restaurant information sourced from
-        <a href="https://developers.zomato.com/api#headline1"> Zomato API</a>
-        </div>    
+            <a href="https://developers.zomato.com/api#headline1"> Zomato API</a>
+        </div>
     </footer>
 
-    <script type="text/javascript" src="assets/javascript/project.js"></script> 
+    <script type="text/javascript" src="assets/javascript/project.js"></script>
 </body>
+
 </html>
