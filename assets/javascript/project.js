@@ -8,9 +8,26 @@ var cityID = 279;
 var cuisineType = '';
 var cuisineID = 0;
 var restaurantList = [];
+var restaurantResults = [];
+
+function startPage (){
+    $('#resultsPage').hide();
+    $('#homepage').show();
+    console.log('working');
+}
+
+window.onload = startPage;
+
+
+function newPage(event){
+    event.preventDefault();
+    $('#homepage').hide();
+    restaurantQuery();
+};
 
 function restaurantQuery(){
-      $('#zomResults').html('');  
+    $('#resultsPage').show();
+    $('#zomResults').html(''); 
     //create array of available cuisines by locations
     var queryURL = 'https://developers.zomato.com/api/v2.1/cuisines?city_id=' + cityID + '&lat=' + lat +'&lon=' + lon + '&count=5&apikey=77290d1b4dc1f21c65b6176dd07d56ed';
 
@@ -45,11 +62,11 @@ function restaurantQuery(){
         .then(function(response){
 
             console.log(response);
-            var results2 = response.restaurants;
-            console.log(results2[0].restaurant.name);
+            var restaurantResults = response.restaurants;
+            console.log(restaurantResults[0].restaurant.name);
             for (var i = 0; i <5; i++) {
-                console.log(results2[i].restaurant.location.latitude);
-                console.log(results2[i].restaurant.location.longitude);
+                console.log(restaurantResults[i].restaurant.location.latitude);
+                console.log(restaurantResults[i].restaurant.location.longitude);
 
                 var cardDiv1 = $('<div class=\'card mb-3\' style=\'max-width:540px\'>');
                 var cardDiv2 = $('<div class=\'row no-gutters\'>');
@@ -57,30 +74,39 @@ function restaurantQuery(){
                 var cardDiv3 = $('<div class=\'col-md-4\'>');
                 cardDiv2.append(cardDiv3);
                 var restaurantImg = $('<img class=\'restaurantImg card-img\'>');
-                restaurantImg.attr("src", results2[i].restaurant.thumb);
+                restaurantImg.attr("src", restaurantResults[i].restaurant.thumb);
                 cardDiv3.append(restaurantImg);
                 var cardDiv4 = $('<div class=\'col-md-8\'>');
                 cardDiv2.append(cardDiv4);
                 var cardDiv5 = $('<div class=\'card-body\'>');
 
-                cardDiv5.append('<h5 class=\'card-title\'>' + results2[i].restaurant.name + '</h5>');
-                cardDiv5.append('<p class=\'card-text\'>' + 'Restaurant Rating: ' + results2[i].restaurant.user_rating.aggregate_rating + '/5' + '</p>');
-                cardDiv5.append('<p class=\'card-text\'>' + results2[i].restaurant.location.address + '</p>');
-                cardDiv5.append('<button type=\'button\' class=\'btn btn-light modalBtn\'>' + 'More info' + '</button>');
+                cardDiv5.append('<h5 class=\'card-title\'>' + restaurantResults[i].restaurant.name + '</h5>');
+                cardDiv5.append('<p class=\'card-text\'>' + 'Restaurant Rating: ' + restaurantResults[i].restaurant.user_rating.aggregate_rating + '/5' + '</p>');
+                cardDiv5.append("<button type='button' class='btn btn-secondary' id='buttonClicker'   restaurantIndex='"+ i +"'>  More info  </button>");
                 cardDiv4.append(cardDiv5);
                 $('#zomResults').append(cardDiv1);
-
             }
-
         });
-
     });
 };
 
-$(document).on('click', '.chooseBtn', restaurantQuery);
+$('#zomResults').on('click', '#buttonClicker', function(restaurantResults){
+    var i = $(this).attr('restaurantIndex')
+    console.log('restaurant results=', restaurantResults[i]);
+    console.log('button says hi');
+    MicroModal.show('modal-2');
+    $('#modal-2-title').html(restaurantResults[i].restaurant.name);
+});
 
 
+
+$('.chooseBtnResults').on('click', restaurantQuery);
+$('#chooseBtnID').on('click', newPage);
+console.log('the is restaurant results array', restaurantResults);
+
+
+//need to restrict certain cuisine
 //add session storage for results?
 //do we need to pull/stor lat/long results for google api?
 //add alt for images
-
+//remove 'undefined' type
