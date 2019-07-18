@@ -62,7 +62,7 @@ function restaurantQuery(){
         .then(function(response){
 
             console.log(response);
-            var restaurantResults = response.restaurants;
+            restaurantResults = response.restaurants;
             console.log(restaurantResults[0].restaurant.name);
             for (var i = 0; i <5; i++) {
                 console.log(restaurantResults[i].restaurant.location.latitude);
@@ -89,13 +89,14 @@ function restaurantQuery(){
         });
     });
 };
-
-$('#zomResults').on('click', '#buttonClicker', function(restaurantResults){
+// What happens when you click on "get info" on the restaurant result page.  This is how the modals are built
+$('#zomResults').on('click', '#buttonClicker', function(){
     var i = $(this).attr('restaurantIndex')
-    console.log('restaurant results=', restaurantResults[i]);
-    console.log('button says hi');
+    console.log('restaurant results=', restaurantResults);
+    console.log('the is i:', i);
     MicroModal.show('modal-2');
     $('#modal-2-title').html(restaurantResults[i].restaurant.name);
+    $('#modal-2-content').html("Address:  " + restaurantResults[i].restaurant.location.address);
 });
 
 
