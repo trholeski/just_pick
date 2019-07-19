@@ -16,90 +16,38 @@
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDVxbtHunY92oZOSYaPmLAY89E_n1uvoy4"></script>
     <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
-
 </head>
 
 <body>
     <div id="homepage">
         <div class="jumbotron big-banner" style="height: 500px; padding-top: 150px;">
 
-
             <h1 class="text-center display-4">What do you want to eat?</h1>
             <br>
             <form class="form-inline my-2 my-lg-0 formInputs d-flex justify-content-center">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id = "searchHome">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                    id="searchHome">
                 <button class="btn btn-dark my-2 my-sm-0" type="submit" id="userSearchHome">Search</button>
             </form>
             <br>
-
             <h1 class="text-center display-4">Can't decide?</h1>
-
             <div class="text-center d-flex justify-content-center">
                 <form id="searchForm">
-                    <div class="formInputs d-flex justify-content-center">
-                        <!-- <div class="form-group" id="search">
-                        <label for="citySesarch">Enter City</label>
-                        <input class="form-control" type="text" placeholder="Where are you eating?" id="citySesarch">
-                    </div> -->
-
-                        <!-- <div class="form-group" id="form2">
-                        <label for="cuisineType">Enter Cuisine type</label>
-                        <input class="form-control" type="text" placeholder="What are you eating?" id="cuisineType">
-                    </div> -->
-                    </div>
-                    <button type="submit" class="btn btn-dark btn-lg chooseBtn" id="chooseBtnID"> Choose for
-                        me!</button>
-                    <!-- <a href='results.html' type="submit" class="btn btn-dark btn-lg chooseBtn">Choose for me!</a> -->
+                    <button type="submit" class="btn btn-dark btn-lg chooseBtn" id="chooseBtnID"> Choose for me!
+                    </button>
                 </form>
-
             </div>
         </div>
     </div>
 
     <div id="resultsPage">
         <form class="form-inline my-2 my-lg-0 formInputs d-flex justify-content-center" id="searchBarResults">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchResults">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                id="searchResults">
             <button class="btn btn-dark my-2 my-sm-0" type="submit" id="userSearchResults">Search</button>
         </form>
-
         <div class="jumbotron big-banner2" style="height: 200px; padding-top: 75px;">
-
             <div class="container d-flex justify-content-center">
-
-
-
-        <div class="container">
-            <!-- Button to Open the Modal -->
-            <button type="button" class="btn btn-primary" data-micromodal-trigger="modal-1">
-            Open modal
-            </button>
-        
-            <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
-                <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-                    <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
-                    <header class="modal__header">
-                        <h2 class="modal__title" id="modal-1-title">
-                        Purple Cafe and Wine Barrrrrrrrrrrrrrrrrrrrr
-                        </h2>
-                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                    </header>
-                    <main class="modal__content" id="modal-1-content">
-                        <p>
-                        Restaurant Details
-                        </p>
-                    </main>
-                    <footer class="modal__footer">
-                        <button class="modal__btn modal__btn-primary">Continue</button>
-                        <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
-                    </footer>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
                 <div class="row">
                     <div>
                         <button type="submit" class="btn btn-dark btn-lg chooseBtnResults">Choose for me again!</button>
@@ -107,52 +55,56 @@
                 </div>
             </div>
         </div>
-
         <div class="container">
-
             <div class="row">
                 <div class="col-md-6 text-center">
                     <div id="zomResults">
                         <h2>Restaurant Results</h2>
                     </div>
                 </div>
-
                 <div class="col-md-6 text-center">
-
                     <h2>Map Results</h2>
                     <br>
                     <div id="mapResults">
-
-
-                    
+                    </div>
                 </div>
             </div>
         </div>
+                <!--code for modals on results page.-->
         <div class="container">
-            <!-- Button to Open the Modal -->
-            <button type="button" class="btn btn-primary" data-micromodal-trigger="modal-2">
-            Open modal
-            </button>
-        
             <div class="modal micromodal-slide" id="modal-2" aria-hidden="true">
                 <div class="modal__overlay" tabindex="-1" data-micromodal-close>
                     <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-2-title">
-                    <header class="modal__header">
-                        <h2 class="modal__title" id="modal-2-title">
-                        Purple Cafe and Wine Barrrrrrrrrrrrrrrrrrrrr
-                        </h2>
-                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                    </header>
-                    <main class="modal__content" id="modal-2-content">
-                        <p>
-                        Restaurant Details
-                        </p>
-                    </main>
-                    <footer class="modal__footer">
-                        <button class="modal__btn modal__btn-primary">Continue</button>
-                        <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
-                    </footer>
-
+                        <header class="modal__header">
+                            <h2 class="modal__title" id="modal-2-title">
+                            </h2>
+                            <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                        </header>
+                        <main class="modal__content" id="modal-2-content">
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-3">
+                                        <img class="card-img2" alt="...">
+                                    </div>
+                                    <div class="col-md-8 offset-1">
+                                        <div class="card-body" id="modalBody">
+                                            <div>
+                                                <h5 class="card-title restaurantName">Restaurant Details</h5>
+                                                <div id="restAddress">Address</div>
+                                                <div id="restPhone">phone</div>
+                                                <div id="restCost">average cost</div>
+                                                <div id="restMenu">menu url</div>
+                                                <div id="restUrl">menu url</div>
+                                                <p class="card-text"><small class="text-muted">If this place sucks,
+                                                        don't blame us</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                        <footer class="modal__footer">
+                        </footer>
                     </div>
                 </div>
             </div>
