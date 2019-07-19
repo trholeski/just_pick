@@ -186,6 +186,7 @@ h1 {
 #linkBtn {
     border-radius: 25px;
 }
+
 .card-img2{
     padding:1em;
     display: inline-block;
@@ -204,3 +205,11 @@ h1 {
     white-space:nowrap;
     display: inline-block;
 }
+
+
+#mapResults {
+    width: auto;
+    height: 400px;
+}
+
+
