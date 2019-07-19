@@ -1,3 +1,4 @@
+
 //Declaring startLat and startLng as the lat/lng for Seattle. This will be default if we do not get geolocation.
 var startLat = 47.6062;
 var startLng = -122.3321;
@@ -35,7 +36,10 @@ function initMap() {
     var mapMarker4 = new google.maps.Marker({ position: marker4, map: map });
     var mapMarker5 = new google.maps.Marker({ position: marker5, map: map });
 }
-//creating variables for 
+
+MicroModal.init();
+
+
 var cuisines = [];
 var cuisineIDs = [];
 var lat = 47.6062;
@@ -44,6 +48,7 @@ var cityID = 279;
 var cuisineType = '';
 var cuisineID = 0;
 var restaurantList = [];
+var restaurantResults = [];
 
 //function that hides #resultsPage and shows #homepage
 function startPage() {
@@ -94,6 +99,7 @@ function restaurantQuery() {
     $('#zomResults').append('<h3>' + "How about " + cuisineType + "?")
     $('#zomResults').append('<br>');
 
+
     //pull restaurant info based on cuisineID
     var queryURL = 'https://developers.zomato.com/api/v2.1/search?lat=' + startLat + '&lon=' + startLng + '&cuisines=' + cuisineID + '&count=5&radius=8045&sort=rating&apikey=77290d1b4dc1f21c65b6176dd07d56ed';
 
@@ -110,17 +116,21 @@ function restaurantQuery() {
                 // console.log(results[i].restaurant.location.latitude);
                 // console.log(results[i].restaurant.location.longitude);
 
+
                 var cardDiv1 = $('<div class=\'card mb-3\' style=\'max-width:540px\'>');
                 var cardDiv2 = $('<div class=\'row no-gutters\'>');
                 cardDiv1.append(cardDiv2);
                 var cardDiv3 = $('<div class=\'col-md-4\'>');
                 cardDiv2.append(cardDiv3);
                 var restaurantImg = $('<img class=\'restaurantImg card-img\'>');
+
                 restaurantImg.attr("src", results[i].restaurant.thumb);
+
                 cardDiv3.append(restaurantImg);
                 var cardDiv4 = $('<div class=\'col-md-8\'>');
                 cardDiv2.append(cardDiv4);
                 var cardDiv5 = $('<div class=\'card-body\'>');
+
                 cardDiv5.append('<h5 class=\'card-title\'>' + results[i].restaurant.name + '</h5>');
                 cardDiv5.append('<p class=\'card-text\'>' + 'Restaurant Rating: ' + results[i].restaurant.user_rating.aggregate_rating + '/5' + '</p>');
                 cardDiv5.append('<p class=\'card-text\'>' + results[i].restaurant.location.address + '</p>');
@@ -252,15 +262,29 @@ function searchQueryResults() {
                 initMap();
             }
         });
+
 };
+// What happens when you click on "get info" on the restaurant result page.  This is how the modals are built
+$('#zomResults').on('click', '#buttonClicker', function(){
+    var i = $(this).attr('restaurantIndex')
+    console.log('restaurant results=', restaurantResults);
+    console.log('the is i:', i);
+    MicroModal.show('modal-2');
+    $('#modal-2-title').html(restaurantResults[i].restaurant.name);
+    $('#modal-2-content').html("Address:  " + restaurantResults[i].restaurant.location.address);
+});
+
+
 
 
 // console.log(userSearch);
 
 $('.chooseBtnResults').on('click', restaurantQuery);
 $('#chooseBtnID').on('click', newPage);
+
 $("#userSearchHome").on("click", searchQueryHome);
 $("#userSearchResults").on("click", searchQueryResults);
+
 
 //user validation that checks the user input to the cuisine types.
 // for (var i = 0; i < cuisines.length; i++) {
