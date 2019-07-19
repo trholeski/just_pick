@@ -16,8 +16,10 @@ if (navigator.geolocation) {
         startLng = pos.lng
         console.log(startLat, startLng);
         listCuisines();
-    });
-}
+    }, listCuisines());
+};
+
+
 //function that creates the map. This will place at most 5 markers on the map based on the restaurant results. Map will center on geolocation.
 function initMap() {
     //creating variables for each of the markers.
