@@ -56,11 +56,10 @@ h1 {
   .modal__container {
     background-color: #fff;
     padding: 30px;
-    max-width: 1000px;
     max-height: 100vh;
+    max-width: 2000px;
     border-radius: 4px;
     overflow-y: auto;
-    box-sizing: border-box;
   }
   
   .modal__header {
@@ -188,8 +187,29 @@ h1 {
     border-radius: 25px;
 }
 
+.card-img2{
+    padding:1em;
+    display: inline-block;
+}
+
+#modalBody{
+    float:left;
+    padding:1em; 
+}
+#restAddress{
+    white-space:nowrap;
+    display: inline-block;
+}
+
+#restPhone{
+    white-space:nowrap;
+    display: inline-block;
+}
+
+
 #mapResults {
     width: auto;
     height: 400px;
 }
+
 

@@ -267,13 +267,21 @@ function searchQueryResults() {
 
 };
 // What happens when you click on "get info" on the restaurant result page.  This is how the modals are built
-$('#zomResults').on('click', '#buttonClicker', function(){
+$('#zomResults').on('click', '#buttonClicker', function(restaurantImg){
     var i = $(this).attr('restaurantIndex')
     console.log('restaurant results=', restaurantResults);
     console.log('the is i:', i);
     MicroModal.show('modal-2');
-    $('#modal-2-title').html(restaurantResults[i].restaurant.name);
-    $('#modal-2-content').html("Address:  " + restaurantResults[i].restaurant.location.address);
+    $('.card-img2').attr('src', restaurantResults[i].restaurant.thumb);
+    $('#restAddress').html("Address: " + restaurantResults[i].restaurant.location.address)
+    $('#restPhone').html("Phone: " +restaurantResults[i].restaurant.phone_numbers)
+    $('#restCost').html("Average Cost For Two: $" + restaurantResults[i].restaurant.average_cost_for_two)
+    $('#restMenu').html('<a target="_blank" href='+restaurantResults[i].restaurant.menu_url+ '>View the MENU</a>')
+    $('#restUrl').html('<a target="_blank" href='+restaurantResults[i].restaurant.url+'>Restaurant Website</a>')
+    $('#modal-2-title').html(restaurantResults[i].restaurant.name)
+    $('.restaurantDetails').html("Restaurant Details:");
+    
+    // $('#modal-2-content').html("Address:  " + restaurantResults[i].restaurant.location.address);
 });
 
 
