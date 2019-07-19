@@ -13,7 +13,9 @@ if (navigator.geolocation) {
         };
         startLat = pos.lat
         startLng = pos.lng
-    },);
+        console.log(startLat, startLng);
+        listCuisines();
+    });
 }
 //function that creates the map. This will place at most 5 markers on the map based on the restaurant results. Map will center on geolocation.
 function initMap() {
@@ -57,89 +59,212 @@ function newPage(event) {
     $('#homepage').hide();
     restaurantQuery();
 };
-
-//function that shows results page, changes the html of zomresults.
-function restaurantQuery() {
-    $('#resultsPage').show();
-    $('#zomResults').html('');
+//function that will gets a list of cuisines based off geolocation. Default location is Seattle.
+function listCuisines() {
     //create array of available cuisines by locations
-    var queryURL = 'https://developers.zomato.com/api/v2.1/cuisines?city_id=' + cityID + '&lat=' + startLat + '&lon=' + startLng + '&count=5&apikey=77290d1b4dc1f21c65b6176dd07d56ed';
+    var queryURL = 'https://developers.zomato.com/api/v2.1/cuisines?&lat=' + startLat + '&lon=' + startLng + '&count=5&apikey=77290d1b4dc1f21c65b6176dd07d56ed';
     // pushes all cuisine types into the cuisines array.
     $.ajax({
         url: queryURL,
         method: 'GET'
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
             var results = response.cuisines;
             //loops through the entire cuisines object and push to the array.
             for (var i = 0; i < results.length; i++) {
                 cuisines.push(results[i].cuisine.cuisine_name)
                 cuisineIDs.push(results[i].cuisine.cuisine_id)
             }
-            console.log(cuisines)
-            //randomly generates a number from 0 to the number of cuisine types.
-            var cuisineGenerator = Math.floor(Math.random() * cuisines.length) + 1;
-            cuisineType = cuisines[cuisineGenerator]; //gets one cuisine (italian).
-            cuisineID = parseInt(cuisineIDs[cuisineGenerator]);//gets the cuisine ID of the cuisine.
-            console.log(cuisineType);
-            console.log(cuisineID);
-            //appends the random cuisine onto results page.
-            $('#zomResults').append('<h3>' + "How about " + cuisineType + "?")
-            $('#zomResults').append('<br>');
+        })
+}
 
-            //pull restaurant info based on cuisineID
-            var queryURL = 'https://developers.zomato.com/api/v2.1/search?entity_type=zone&lat=' + startLat + '&lon=' + startLng + '&cuisines=' + cuisineID + '&count=5&radius=8045&apikey=77290d1b4dc1f21c65b6176dd07d56ed';
+//function that shows results page, changes the html of zomresults.
+function restaurantQuery() {
+    $('#resultsPage').show();
+    $('#zomResults').html('');
+    // console.log(cuisines)
+    //randomly generates a number from 0 to the number of cuisine types.
+    var cuisineGenerator = Math.floor(Math.random() * cuisines.length);
+    cuisineType = cuisines[cuisineGenerator]; //gets one cuisine (italian).
+    cuisineID = parseInt(cuisineIDs[cuisineGenerator]);//gets the cuisine ID of the cuisine.
+    // console.log(cuisineType);
+    // console.log(cuisineID);
+    //appends the random cuisine onto results page.
+    $('#zomResults').append('<h3>' + "How about " + cuisineType + "?")
+    $('#zomResults').append('<br>');
 
-            $.ajax({
-                url: queryURL,
-                method: 'GET'
-            })
-                .then(function (response) {
-                    console.log(response);
-                    var results2 = response.restaurants;
-                    console.log(results2[0].restaurant.name);
-                    for (var i = 0; i < 5; i++) {
-                        console.log(results2[i].restaurant.location.latitude);
-                        console.log(results2[i].restaurant.location.longitude);
+    //pull restaurant info based on cuisineID
+    var queryURL = 'https://developers.zomato.com/api/v2.1/search?lat=' + startLat + '&lon=' + startLng + '&cuisines=' + cuisineID + '&count=5&radius=8045&sort=rating&apikey=77290d1b4dc1f21c65b6176dd07d56ed';
 
-                        var cardDiv1 = $('<div class=\'card mb-3\' style=\'max-width:540px\'>');
-                        var cardDiv2 = $('<div class=\'row no-gutters\'>');
-                        cardDiv1.append(cardDiv2);
-                        var cardDiv3 = $('<div class=\'col-md-4\'>');
-                        cardDiv2.append(cardDiv3);
-                        var restaurantImg = $('<img class=\'restaurantImg card-img\'>');
-                        restaurantImg.attr("src", results2[i].restaurant.thumb);
-                        cardDiv3.append(restaurantImg);
-                        var cardDiv4 = $('<div class=\'col-md-8\'>');
-                        cardDiv2.append(cardDiv4);
-                        var cardDiv5 = $('<div class=\'card-body\'>');
+    $.ajax({
+        url: queryURL,
+        method: 'GET'
+    })
+        .then(function (response) {
+            // console.log(response);
+            var results = response.restaurants;
+            // console.log(results[0].restaurant.name);
+            //loops through the first 5 restaurant results and appends it onto the results page.
+            for (var i = 0; i < 5; i++) {
+                // console.log(results[i].restaurant.location.latitude);
+                // console.log(results[i].restaurant.location.longitude);
 
-                        cardDiv5.append('<h5 class=\'card-title\'>' + results2[i].restaurant.name + '</h5>');
-                        cardDiv5.append('<p class=\'card-text\'>' + 'Restaurant Rating: ' + results2[i].restaurant.user_rating.aggregate_rating + '/5' + '</p>');
-                        cardDiv5.append('<p class=\'card-text\'>' + results2[i].restaurant.location.address + '</p>');
-                        cardDiv5.append('<button type=\'button\' class=\'btn btn-light modalBtn\'>' + 'More info' + '</button>');
-                        cardDiv4.append(cardDiv5);
-                        $('#zomResults').append(cardDiv1);
-                        resultsArray.push(results2[i].restaurant.location.latitude);
-                        resultsArray.push(results2[i].restaurant.location.longitude);
-                        console.log(resultsArray);
-                        initMap();
-                    }
-                });
+                var cardDiv1 = $('<div class=\'card mb-3\' style=\'max-width:540px\'>');
+                var cardDiv2 = $('<div class=\'row no-gutters\'>');
+                cardDiv1.append(cardDiv2);
+                var cardDiv3 = $('<div class=\'col-md-4\'>');
+                cardDiv2.append(cardDiv3);
+                var restaurantImg = $('<img class=\'restaurantImg card-img\'>');
+                restaurantImg.attr("src", results[i].restaurant.thumb);
+                cardDiv3.append(restaurantImg);
+                var cardDiv4 = $('<div class=\'col-md-8\'>');
+                cardDiv2.append(cardDiv4);
+                var cardDiv5 = $('<div class=\'card-body\'>');
+                cardDiv5.append('<h5 class=\'card-title\'>' + results[i].restaurant.name + '</h5>');
+                cardDiv5.append('<p class=\'card-text\'>' + 'Restaurant Rating: ' + results[i].restaurant.user_rating.aggregate_rating + '/5' + '</p>');
+                cardDiv5.append('<p class=\'card-text\'>' + results[i].restaurant.location.address + '</p>');
+                cardDiv5.append('<button type=\'button\' class=\'btn btn-light modalBtn\'>' + 'More info' + '</button>');
+                cardDiv4.append(cardDiv5);
+                $('#zomResults').append(cardDiv1);
+                if (i === 0) {
+                    resultsArray = [];
+                    resultsArray.push(results[i].restaurant.location.latitude);
+                    resultsArray.push(results[i].restaurant.location.longitude);
+                } else {
+                    resultsArray.push(results[i].restaurant.location.latitude);
+                    resultsArray.push(results[i].restaurant.location.longitude);
+                    // console.log(resultsArray);
+                }
+                initMap();
+            }
         });
 };
 
-function searchQuery() {
+//function that gets the value of user input. Also checks if this is a cuisine. IF it is, run function that calls api based off cuisine id.
+function searchQueryHome() {
     event.preventDefault();
-    var userSearch = $("#searchBar").val();
-    console.log(userSearch);
-}
+    $('#homepage').hide();
+    $('#resultsPage').show();
+    $('#zomResults').html('');
+    var userSearch = $("#searchHome").val();
+    //appends the user search:
+    $('#zomResults').append('<h3>' + "You searched for " + userSearch)
+    $('#zomResults').append('<br>');
+
+    var queryURL = "https://developers.zomato.com/api/v2.1/search?q=" + userSearch + "&lat=" + startLat + "&lon=" + startLng + "&radius=8045&sort=rating&apikey=77290d1b4dc1f21c65b6176dd07d56ed"
+
+    $.ajax({
+        url: queryURL,
+        method: 'GET'
+    })
+        .then(function (response) {
+            // console.log(response);
+            var results = response.restaurants;
+            // console.log(results[0].restaurant.name);
+            //loops through the first 5 restaurant results and appends it onto the results page.
+            for (var i = 0; i < 5; i++) {
+                // console.log(results[i].restaurant.location.latitude);
+                // console.log(results[i].restaurant.location.longitude);
+
+                var cardDiv1 = $('<div class=\'card mb-3\' style=\'max-width:540px\'>');
+                var cardDiv2 = $('<div class=\'row no-gutters\'>');
+                cardDiv1.append(cardDiv2);
+                var cardDiv3 = $('<div class=\'col-md-4\'>');
+                cardDiv2.append(cardDiv3);
+                var restaurantImg = $('<img class=\'restaurantImg card-img\'>');
+                restaurantImg.attr("src", results[i].restaurant.thumb);
+                cardDiv3.append(restaurantImg);
+                var cardDiv4 = $('<div class=\'col-md-8\'>');
+                cardDiv2.append(cardDiv4);
+                var cardDiv5 = $('<div class=\'card-body\'>');
+                cardDiv5.append('<h5 class=\'card-title\'>' + results[i].restaurant.name + '</h5>');
+                cardDiv5.append('<p class=\'card-text\'>' + 'Restaurant Rating: ' + results[i].restaurant.user_rating.aggregate_rating + '/5' + '</p>');
+                cardDiv5.append('<p class=\'card-text\'>' + results[i].restaurant.location.address + '</p>');
+                cardDiv5.append('<button type=\'button\' class=\'btn btn-light modalBtn\'>' + 'More info' + '</button>');
+                cardDiv4.append(cardDiv5);
+                $('#zomResults').append(cardDiv1);
+                if (i === 0) {
+                    resultsArray = [];
+                    resultsArray.push(results[i].restaurant.location.latitude);
+                    resultsArray.push(results[i].restaurant.location.longitude);
+                } else {
+                    resultsArray.push(results[i].restaurant.location.latitude);
+                    resultsArray.push(results[i].restaurant.location.longitude);
+                    // console.log(resultsArray);
+                }
+                initMap();
+            }
+        });
+};
+
+function searchQueryResults() {
+    event.preventDefault();
+    $('#homepage').hide();
+    $('#resultsPage').show();
+    $('#zomResults').html('');
+    var userSearch = $("#searchResults").val();
+    //appends the user search:
+    $('#zomResults').append('<h3>' + "You searched for " + userSearch)
+    $('#zomResults').append('<br>');
+
+    var queryURL = "https://developers.zomato.com/api/v2.1/search?q=" + userSearch + "&lat=" + startLat + "&lon=" + startLng + "&radius=8045&sort=rating&apikey=77290d1b4dc1f21c65b6176dd07d56ed"
+
+    $.ajax({
+        url: queryURL,
+        method: 'GET'
+    })
+        .then(function (response) {
+            // console.log(response);
+            var results = response.restaurants;
+            // console.log(results[0].restaurant.name);
+            //loops through the first 5 restaurant results and appends it onto the results page.
+            for (var i = 0; i < 5; i++) {
+                // console.log(results[i].restaurant.location.latitude);
+                // console.log(results[i].restaurant.location.longitude);
+
+                var cardDiv1 = $('<div class=\'card mb-3\' style=\'max-width:540px\'>');
+                var cardDiv2 = $('<div class=\'row no-gutters\'>');
+                cardDiv1.append(cardDiv2);
+                var cardDiv3 = $('<div class=\'col-md-4\'>');
+                cardDiv2.append(cardDiv3);
+                var restaurantImg = $('<img class=\'restaurantImg card-img\'>');
+                restaurantImg.attr("src", results[i].restaurant.thumb);
+                cardDiv3.append(restaurantImg);
+                var cardDiv4 = $('<div class=\'col-md-8\'>');
+                cardDiv2.append(cardDiv4);
+                var cardDiv5 = $('<div class=\'card-body\'>');
+                cardDiv5.append('<h5 class=\'card-title\'>' + results[i].restaurant.name + '</h5>');
+                cardDiv5.append('<p class=\'card-text\'>' + 'Restaurant Rating: ' + results[i].restaurant.user_rating.aggregate_rating + '/5' + '</p>');
+                cardDiv5.append('<p class=\'card-text\'>' + results[i].restaurant.location.address + '</p>');
+                cardDiv5.append('<button type=\'button\' class=\'btn btn-light modalBtn\'>' + 'More info' + '</button>');
+                cardDiv4.append(cardDiv5);
+                $('#zomResults').append(cardDiv1);
+                if (i === 0) {
+                    resultsArray = [];
+                    resultsArray.push(results[i].restaurant.location.latitude);
+                    resultsArray.push(results[i].restaurant.location.longitude);
+                } else {
+                    resultsArray.push(results[i].restaurant.location.latitude);
+                    resultsArray.push(results[i].restaurant.location.longitude);
+                    // console.log(resultsArray);
+                }
+                initMap();
+            }
+        });
+};
+
+
+// console.log(userSearch);
+
 $('.chooseBtnResults').on('click', restaurantQuery);
 $('#chooseBtnID').on('click', newPage);
-$("#userSearch").on("click", searchQuery);
-//need to restrict certain cuisine
-//add session storage for results?
-//do we need to pull/stor lat/long results for google api?
-//add alt for images
-//remove 'undefined' type
+$("#userSearchHome").on("click", searchQueryHome);
+$("#userSearchResults").on("click", searchQueryResults);
+
+//user validation that checks the user input to the cuisine types.
+// for (var i = 0; i < cuisines.length; i++) {
+//     if (userSearch === cuisines[i]) {
+//         console.log("its a cuisine");
+//     } else{}
+// }
