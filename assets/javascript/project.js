@@ -18,6 +18,7 @@ if (navigator.geolocation) {
         listCuisines();
     }, listCuisines());
 }
+
 //function that creates the map. This will place at most 5 markers on the map based on the restaurant results. Map will center on geolocation.
 function initMap() {
     //creating variables for each of the markers.
@@ -326,23 +327,7 @@ $('#zomResults').on('click', '#buttonClicker', function () {//run this function.
     $('#restUrl').html('<a target="_blank" href=' + restaurantResults[i].restaurant.url + '>Restaurant Website</a>')
     $('#modal-2-title').html(restaurantResults[i].restaurant.name)
 });
-
-// $('#mapResults').on('click', '', function () {//run this function.
-//     var i = $(this).attr('restaurantIndex') //get the attribute "restaurantIndex" of the button clicked, assigns it to var i.
-//     MicroModal.show('modal-2');//shows micromodal.
-//     //adds a bunch of information to the micromodal. thumbnail, address, phone, cost, etc.
-//     $('.card-img2').attr('src', restaurantResults[i].restaurant.thumb); //this code calling restaurantResults is actually calling the api for zomato. 
-//     $('#restAddress').html("Address: " + restaurantResults[i].restaurant.location.address)
-//     $('#restPhone').html("Phone: " + restaurantResults[i].restaurant.phone_numbers)
-//     $('#restCost').html("Average Cost For Two: $" + restaurantResults[i].restaurant.average_cost_for_two)
-//     $('#restMenu').html('<a target="_blank" href=' + restaurantResults[i].restaurant.menu_url + '>View the MENU</a>')
-//     $('#restUrl').html('<a target="_blank" href=' + restaurantResults[i].restaurant.url + '>Restaurant Website</a>')
-//     $('#modal-2-title').html(restaurantResults[i].restaurant.name)
-// });
-
-
-
-
+  
 //when "Choose for me" is clicked from the results screen, run restaurantQuery()
 $('.chooseBtnResults').on('click', restaurantQuery);
 //when the "choose for me" on home screen is clicked, run newPage().

@@ -183,6 +183,7 @@ h1 {
 .micromodal-slide .modal__overlay {
   will-change: transform;
 }  
+
 #linkBtn {
   border-radius: 25px;
 }
