@@ -168,8 +168,6 @@ function restaurantQuery() {
             // console.log(response);
             restaurantResults = response.restaurants;
             var results = response.restaurants;
-            console.log(results)
-            console.log(restaurantResults)
             // console.log(results[0].restaurant.name);
             //loops through the first 5 restaurant results and appends it onto the results page.
             for (var i = 0; i < 5; i++) {
